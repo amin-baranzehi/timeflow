@@ -12,12 +12,6 @@ pluginManagement {
     includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
 
     repositories {
-        // Mirrors for Iran
-        maven { url = uri("https://maven.aliyun.com/repository/google") }
-        maven { url = uri("https://maven.aliyun.com/repository/public") }
-        maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin") }
-
-        // Official
         google()
         mavenCentral()
         gradlePluginPortal()
@@ -28,13 +22,11 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
 
     repositories {
-        // Mirrors for Iran
-        maven { url = uri("https://maven.aliyun.com/repository/google") }
-        maven { url = uri("https://maven.aliyun.com/repository/public") }
-
-        // Official repositories
         google()
         mavenCentral()
+
+        // Flutter engine artifacts
+        maven { url = uri("https://storage.googleapis.com/download.flutter.io") }
     }
 }
 
