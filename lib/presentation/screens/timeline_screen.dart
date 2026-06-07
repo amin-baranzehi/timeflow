@@ -19,14 +19,7 @@ class TimelineScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Timeline'),
-        actions: [
-          IconButton(
-            tooltip: 'Today',
-            onPressed: context.read<AppState>().goToToday,
-            icon: const Icon(Icons.today_rounded),
-          ),
-        ],
+        title: const Text('Timeline')
       ),
       body: StreamBuilder<List<Activity>>(
         stream: database.activitiesDao.watchActivitiesForDay(
@@ -43,7 +36,7 @@ class TimelineScreen extends StatelessWidget {
             );
           }
 
-          final entries = _TimelineEntry.fromActivities(activities);
+          final entries = _TimelineEntry.fromActivities(activities, appState.minGapMinutes);
 
           return ListView.separated(
             padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
@@ -75,7 +68,7 @@ class TimelineScreen extends StatelessWidget {
 sealed class _TimelineEntry {
   const _TimelineEntry();
 
-  static List<_TimelineEntry> fromActivities(List<Activity> activities) {
+  static List<_TimelineEntry> fromActivities(List<Activity> activities, double minGapMinutes) {
     final sorted = [...activities]
       ..sort((a, b) => a.startTime.compareTo(b.startTime));
     final entries = <_TimelineEntry>[];
@@ -86,7 +79,10 @@ sealed class _TimelineEntry {
         final currentStart = sorted[index].startTime;
 
         if (previousEnd != null && currentStart.isAfter(previousEnd)) {
-          entries.add(GapEntry(start: previousEnd, end: currentStart));
+          final gapDuration = currentStart.difference(previousEnd);
+          if (gapDuration >= Duration(seconds: (minGapMinutes * 60).round())) {
+            entries.add(GapEntry(start: previousEnd, end: currentStart));
+          }
         }
       }
 

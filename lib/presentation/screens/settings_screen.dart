@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:timeflow/core/app/app_state.dart';
 import 'package:timeflow/core/theme/app_colors.dart';
@@ -101,116 +100,43 @@ class SettingsScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          const _AboutUsCard(),
+          _SectionCard(
+            title: 'Timeline Gap Threshold',
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.space_bar_rounded,
+                    color: AppColors.skyBlue,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      '${appState.minGapMinutes.toStringAsFixed(1)} minutes',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Slider(
+                value: appState.minGapMinutes,
+                min: 0,
+                max: 10,
+                divisions: 20,
+                label: '${appState.minGapMinutes.toStringAsFixed(1)}m',
+                onChanged: context.read<AppState>().setMinGapMinutes,
+              ),
+              Text(
+                'Gaps shorter than this duration will not be displayed in the timeline.',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ],
+          ),
         ],
       ),
     );
-  }
-}
-
-class _AboutUsCard extends StatelessWidget {
-  const _AboutUsCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(18),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('About Us', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                ClipOval(
-                  child: Image.asset(
-                    'assets/images/191347109.png',
-                    width: 72,
-                    height: 72,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'MohammadAmin Baranzehi',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.w900),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Creator of TimeFlow',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _SocialLink(
-              icon: Icons.code_rounded,
-              label: 'GitHub',
-              value: 'amin-baranzehi',
-              url: 'https://github.com/amin-baranzehi',
-            ),
-            _SocialLink(
-              icon: Icons.camera_alt_outlined,
-              label: 'Instagram',
-              value: 'amin.baranzehi_',
-              url: 'https://instagram.com/amin.baranzehi_',
-            ),
-            _SocialLink(
-              icon: Icons.chat_outlined,
-              label: 'WhatsApp',
-              value: '+19293223359',
-              url: 'https://wa.me/19293223359',
-            ),
-            _SocialLink(
-              icon: Icons.send_outlined,
-              label: 'Telegram',
-              value: 'amin_baranzehi',
-              url: 'https://t.me/amin_baranzehi',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SocialLink extends StatelessWidget {
-  const _SocialLink({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.url,
-  });
-
-  final IconData icon;
-  final String label;
-  final String value;
-  final String url;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: AppColors.skyBlue),
-      title: Text(label),
-      subtitle: Text(value),
-      trailing: const Icon(Icons.open_in_new_rounded, size: 18),
-      onTap: () => _open(url),
-    );
-  }
-
-  Future<void> _open(String url) async {
-    final uri = Uri.parse(url);
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 }
 

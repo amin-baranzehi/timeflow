@@ -6,6 +6,7 @@ import 'package:timeflow/features/time_tracker/widgets/new_activity_sheet.dart';
 import 'timeline_screen.dart';
 import 'statistics_screen.dart';
 import 'settings_screen.dart';
+import 'about_us_screen.dart';
 
 class MainContainer extends StatefulWidget {
   const MainContainer({super.key});
@@ -71,6 +72,19 @@ class _MainContainerState extends State<MainContainer> {
                 selected: _selectedIndex == 3,
                 onTap: () => _selectFromDrawer(3),
               ),
+              _DrawerItem(
+                icon: Icons.info_outline_rounded,
+                label: 'About Us',
+                selected: false,
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const AboutUsScreen(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -103,40 +117,44 @@ class _MainContainerState extends State<MainContainer> {
         shape: const CircleBorder(),
         child: const Icon(Icons.add_rounded),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              color: Theme.of(context).colorScheme.outline,
-              width: 1,
+      bottomNavigationBar: SafeArea(
+        top: false,
+        bottom: true,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Theme.of(context).colorScheme.outline,
+                width: 1,
+              ),
             ),
           ),
-        ),
-        child: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.play_circle_outline),
-              activeIcon: Icon(Icons.play_circle),
-              label: 'Tracker',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.timeline_outlined),
-              activeIcon: Icon(Icons.timeline),
-              label: 'Timeline',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart_outlined),
-              activeIcon: Icon(Icons.bar_chart),
-              label: 'Analytics',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined),
-              activeIcon: Icon(Icons.settings),
-              label: 'Settings',
-            ),
-          ],
+          child: BottomNavigationBar(
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.play_circle_outline),
+                activeIcon: Icon(Icons.play_circle),
+                label: 'Tracker',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.timeline_outlined),
+                activeIcon: Icon(Icons.timeline),
+                label: 'Timeline',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bar_chart_outlined),
+                activeIcon: Icon(Icons.bar_chart),
+                label: 'Analytics',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings_outlined),
+                activeIcon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
+            ],
+          ),
         ),
       ),
     );

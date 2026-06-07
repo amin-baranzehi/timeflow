@@ -7,6 +7,7 @@ class AppState extends ChangeNotifier {
   bool _autoStopLongSessions = false;
   bool _compactTimeline = false;
   double _dailyGoalHours = 6;
+  double _minGapMinutes = 2.0;
 
   ThemeMode get themeMode => _themeMode;
   DateTime get selectedDate => _selectedDate;
@@ -14,10 +15,17 @@ class AppState extends ChangeNotifier {
   bool get autoStopLongSessions => _autoStopLongSessions;
   bool get compactTimeline => _compactTimeline;
   double get dailyGoalHours => _dailyGoalHours;
+  double get minGapMinutes => _minGapMinutes;
 
   void setThemeMode(ThemeMode value) {
     if (_themeMode == value) return;
     _themeMode = value;
+    notifyListeners();
+  }
+
+  void setMinGapMinutes(double value) {
+    if (_minGapMinutes == value) return;
+    _minGapMinutes = value;
     notifyListeners();
   }
 
