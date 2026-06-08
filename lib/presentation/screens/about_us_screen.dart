@@ -118,13 +118,6 @@ class AboutUsScreen extends StatelessWidget {
                 brandColor: const Color(0xFFE4405F),
               ),
               _SocialCardLink(
-                icon: FontAwesomeIcons.whatsapp,
-                label: 'WhatsApp',
-                value: '+19293223359',
-                url: 'https://wa.me/19293223359',
-                brandColor: const Color(0xFF25D366),
-              ),
-              _SocialCardLink(
                 icon: FontAwesomeIcons.telegram,
                 label: 'Telegram',
                 value: 'amin_baranzehi',

@@ -8,22 +8,31 @@ import 'package:timeflow/shared/models/activity.dart';
 import 'package:timeflow/shared/models/activity_type.dart';
 
 Future<void> showNewActivitySheet(BuildContext context) {
-  return showModalBottomSheet<void>(
+  return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    useSafeArea: true,
+    useSafeArea: false,
     showDragHandle: true,
-    builder: (_) => MultiProvider(
-      providers: [
-        Provider<AppDatabase>.value(value: context.read<AppDatabase>()),
-        ChangeNotifierProvider<TimerProvider>.value(
-          value: context.read<TimerProvider>(),
+    builder: (_) {
+      return SafeArea(
+        top: false,
+        left: false,
+        right: false,
+        bottom: true, 
+        child: MultiProvider(
+          providers: [
+            Provider<AppDatabase>.value(value: context.read<AppDatabase>()),
+            ChangeNotifierProvider<TimerProvider>.value(
+              value: context.read<TimerProvider>(),
+            ),
+          ],
+          child: const NewActivitySheet(),
         ),
-      ],
-      child: const NewActivitySheet(),
-    ),
+      );
+    },
   );
 }
+
 
 class NewActivitySheet extends StatefulWidget {
   const NewActivitySheet({super.key});

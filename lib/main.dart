@@ -1,6 +1,7 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:timeflow/core/theme/app_colors.dart';
 import 'core/app/app_state.dart';
 import 'core/theme/app_theme.dart';
 import 'core/database/app_database.dart';
@@ -138,12 +139,10 @@ class _SplashScreenState extends State<SplashScreen> {
                               ?.copyWith(fontWeight: FontWeight.w900),
                           children: [
                             const TextSpan(text: 'Time'),
-                            TextSpan(
-                              text: 'Flow',
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
+                          TextSpan(
+                            text: 'Flow',
+                            style: TextStyle(color: AppColors.goldenYellow),
+                          ),
                           ],
                         ),
                       ),
